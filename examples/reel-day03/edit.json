@@ -1,0 +1,44 @@
+{
+  "slug": "day03-dots",
+  "title": "Your AI can chase deadlines for you (OpenAI Dots, Day 3)",
+  "raw_dir": "raw-footages/day03-dots",
+  "script": "script.pdf",
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "max_pause": 0.1,
+  "noise_db": -35,
+  "pad": 0.03,
+  "takes": [
+    { "line": "hook",    "clip": "20260930_174925", "start": 4.40,  "end": 7.00 },
+    { "line": "welcome", "clip": "20260930_175028", "start": 15.90, "end": 18.68 },
+    { "line": "dots",    "clip": "20260930_175115", "start": 19.08, "end": 22.50 },
+    { "line": "try",     "clip": "20260930_175228", "start": 23.85, "end": 28.45 },
+    { "line": "prompt",  "clip": "20260930_175313", "start": 14.80, "end": 22.90 },
+    { "line": "confirm", "clip": "20260930_175359", "start": 6.95,  "end": 8.71 },
+    { "line": "done",    "clip": "20260930_175448", "start": 9.95,  "end": 12.36 },
+    { "line": "done2",   "clip": "20260930_175448", "start": 85.56, "end": 86.97, "note": "user pick 1:22-1:27; only 'you'd otherwise do yourself' (its first half says 'dedicated')" },
+    { "line": "cta",     "clip": "20260930_175628", "start": 19.30, "end": 23.20 }
+  ],
+  "captions": {
+    "hook_end": 2.0,
+    "full_windows": [[9.53, 18.9], [20.533, 24.3]],
+    "drop": 250,
+    "groups": [
+      ["Your", "AI", "can", "chase", "deadlines", "for", "you."],
+      ["Welcome", "back"], ["to", "day", "three"], ["of", "turning", "AI", "news"], ["into", "something", "*useful."],
+      ["Open+AI's", "*Dots"], ["keep", "working"], ["between", "the", "chats."],
+      ["Here", "is", "something"], ["to", "try"], ["if", "you", "have", "*access."], ["Connect", "your", "project"], ["calendar", "and", "files."], ["And", "then", "say:"],
+      ["“Track", "this", "project", "deadline."], ["Every", "morning,"], ["tell", "me", "what", "changed,"], ["what's", "*overdue,"], ["and", "what", "needs"], ["my", "decision."],
+      ["Draft", "follow-ups,"], ["but", "*ask", "before", "sending.”"],
+      ["Ask", "it", "to", "confirm"], ["the", "*schedule."],
+      ["Now", "you", "have", "*delegated"], ["a", "daily", "project", "check."], ["You'd", "-", "-", "otherwise"], ["do", "yourself."],
+      ["Access", "is", "rolling", "out"], ["gradually."], ["Comment", "*DOTS,"], ["I'll", "send", "you"], ["the", "full", "setup", "guide."]
+    ]
+  },
+  "publish": {
+    "cover": "cover/cover.png",
+    "loudness_lufs": -14,
+    "platforms": ["instagram", "youtube", "facebook", "x"]
+  }
+}

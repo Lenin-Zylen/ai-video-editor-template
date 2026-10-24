@@ -1,0 +1,56 @@
+<template>
+  <style>
+    @font-face { font-family: "Archivo"; src: url("assets/fonts/Archivo-var.ttf") format("truetype"); font-weight: 100 900; font-stretch: 62% 125%; }
+    #root { position: absolute; inset: 0; background: #0d1117; overflow: hidden; }
+    #hook-grid { position: absolute; inset: 0; }
+    #hook-grid i { position: absolute; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: #8a8f98; opacity: 0.16; }
+    #hook-label { position: absolute; left: 80px; top: 640px; font-family: "JetBrains Mono", monospace; font-size: 30px; letter-spacing: 0.12em; color: #8a8f98; }
+    #hook-label b { color: #c8f04a; font-weight: 600; }
+    #hook-label { display: flex; align-items: center; gap: 14px; top: 620px; }
+    #hook-label img { width: 52px; height: 52px; border-radius: 50%; border: 2px solid #2a313c; }
+    #hook-title { position: absolute; left: 80px; top: 710px; width: 920px; font-family: "Archivo", sans-serif; font-weight: 900; font-stretch: 125%; font-size: 124px; line-height: 0.95; letter-spacing: -0.02em; text-transform: uppercase; }
+    #hook-title span { display: inline-block; color: #6b717b; transform-origin: 0% 80%; }
+  </style>
+  <div id="root" data-composition-id="hook" data-width="1080" data-height="1920">
+    <div id="hook-grid" data-layout-ignore></div>
+    <div id="hook-label"><img src="assets/logos/channel-avatar.png" alt="" /><span><b>&gt;_</b> @YOURHANDLE · DAY 03</span></div>
+    <div id="hook-title">
+      <span id="hw-1">Your</span> <span id="hw-2">AI</span><br />
+      <span id="hw-3">can</span> <span id="hw-4">chase</span><br />
+      <span id="hw-5">deadlines</span><br />
+      <span id="hw-6">for</span> <span id="hw-7">you.</span>
+    </div>
+  </div>
+  <script>
+    // Dot field (the "Dots" motif): a fixed grid, built once before the timeline.
+    const grid = document.getElementById("hook-grid");
+    const dots = [];
+    for (let r = 0; r < 17; r++) {
+      for (let c = 0; c < 10; c++) {
+        const d = document.createElement("i");
+        const x = 72 + c * 104, y = 120 + r * 108;
+        d.style.left = x + "px";
+        d.style.top = y + "px";
+        grid.appendChild(d);
+        dots.push([d, x, y]);
+      }
+    }
+    const tl = gsap.timeline({ paused: true });
+    // Words sit in dim grey at frame 0 (the thumbnail), then slam in white as spoken.
+    const words = [["#hw-1", 0.04], ["#hw-2", 0.27], ["#hw-3", 0.4], ["#hw-4", 0.59], ["#hw-5", 1.01], ["#hw-6", 1.55], ["#hw-7", 1.76]];
+    words.forEach(([id, t]) => {
+      const color = id === "#hw-5" ? "#c8f04a" : "#ffffff";
+      // sharp grey until spoken (frame 0 is the thumbnail), then a quick slam into colour
+      tl.fromTo(id, { color: "#6b717b" }, { color, duration: 0.12, ease: "power2.out" }, t);
+      tl.fromTo(id, { scale: 1.14, filter: "blur(6px)" }, { scale: 1, filter: "blur(0px)", duration: 0.16, ease: "expo.out", immediateRender: false }, t);
+    });
+    // On "deadlines" a ripple runs out through the dot field from the word.
+    const cx = 380, cy = 940;
+    dots.forEach(([d, x, y]) => {
+      const t = 1.01 + Math.hypot(x - cx, y - cy) / 2600;
+      tl.fromTo(d, { opacity: 0.16, scale: 1, backgroundColor: "#8a8f98" }, { opacity: 0.9, scale: 1.7, backgroundColor: "#c8f04a", duration: 0.1, ease: "power2.out" }, t);
+      tl.to(d, { opacity: 0.16, scale: 1, backgroundColor: "#8a8f98", duration: 0.45, ease: "power2.in" }, t + 0.12);
+    });
+    window.__timelines["hook"] = tl;
+  </script>
+</template>

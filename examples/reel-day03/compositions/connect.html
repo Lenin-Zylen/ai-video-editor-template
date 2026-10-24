@@ -1,0 +1,81 @@
+<template>
+  <style>
+    @font-face { font-family: "Archivo"; src: url("assets/fonts/Archivo-var.ttf") format("truetype"); font-weight: 100 900; font-stretch: 62% 125%; }
+    #root { position: absolute; inset: 0; }
+    #con-stage { position: absolute; left: 0; top: 0; width: 1080px; height: 960px; background: #0d1117; }
+    #con-wrap { position: absolute; inset: 0; transform-origin: 540px 505px; }
+    .con-sweep { position: absolute; left: 0; top: 0; width: 260px; height: 960px; background: linear-gradient(90deg, transparent, rgba(200, 240, 74, 0.22), transparent); }
+    #con-access { position: absolute; left: 80px; top: 262px; height: 64px; padding: 0 26px; border-radius: 32px; border: 2px solid #2a313c; background: #161b22; display: flex; align-items: center; gap: 14px; font-family: "JetBrains Mono", monospace; font-size: 28px; letter-spacing: 0.1em; color: #eeebe3; }
+    #con-access b { width: 16px; height: 16px; border-radius: 50%; background: #8a8f98; }
+    #con-title { position: absolute; left: 80px; top: 250px; font-family: "Archivo", sans-serif; font-weight: 800; font-stretch: 112%; font-size: 84px; line-height: 1; color: #ffffff; }
+    .con-card { position: absolute; left: 80px; width: 470px; height: 150px; background: #161b22; border: 2px solid #2a313c; border-radius: 24px; display: flex; align-items: center; gap: 26px; padding: 0 30px; font-family: "Inter", sans-serif; font-weight: 600; font-size: 36px; color: #ffffff; }
+    .con-card small { display: block; font-family: "JetBrains Mono", monospace; font-weight: 400; font-size: 28px; letter-spacing: 0.1em; color: #8a8f98; margin-top: 6px; }
+    #con-cal { top: 400px; } #con-files { top: 610px; }
+    .con-icon { width: 76px; height: 76px; border-radius: 16px; border: 3px solid #8a8f98; position: relative; flex: none; }
+    #con-cal .con-icon::before { content: ""; position: absolute; left: 0; right: 0; top: 18px; height: 3px; background: #8a8f98; }
+    #con-cal .con-icon i { position: absolute; width: 12px; height: 12px; border-radius: 3px; background: #8a8f98; top: 32px; }
+    #con-files .con-icon { width: 62px; border-radius: 8px; }
+    .con-logo { width: 76px; height: 76px; flex: none; object-fit: contain; }
+    #con-dot img { width: 44px; height: 44px; }
+    #con-files .con-icon::before { content: ""; position: absolute; left: 12px; right: 12px; top: 22px; height: 3px; background: #8a8f98; box-shadow: 0 12px 0 #8a8f98, 0 24px 0 #8a8f98; }
+    #con-lines { position: absolute; left: 550px; top: 400px; width: 200px; height: 360px; }
+    .con-pk { position: absolute; left: 0; top: 0; width: 20px; height: 20px; margin: -10px 0 0 -10px; border-radius: 50%; background: #c8f04a; opacity: 0; }
+    #con-dot { position: absolute; left: 750px; top: 490px; width: 250px; height: 180px; background: #161b22; border: 2px solid #c8f04a; border-radius: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; font-family: "Inter", sans-serif; font-weight: 600; font-size: 34px; color: #ffffff; }
+    #con-dot b { width: 34px; height: 34px; border-radius: 50%; background: #c8f04a; display: block; }
+    #con-ring { position: absolute; left: 750px; top: 490px; width: 250px; height: 180px; border-radius: 24px; border: 3px solid #c8f04a; opacity: 0; }
+  </style>
+  <div id="root" data-composition-id="connect" data-width="1080" data-height="1920">
+    <div id="con-stage">
+      <div id="con-wrap">
+        <div id="con-access"><b></b>IF YOU HAVE ACCESS</div>
+        <div id="con-title">Connect</div>
+        <div class="con-card" id="con-cal"><img class="con-logo" src="assets/logos/google-calendar.svg" alt="" /><div>Project calendar<small>DEADLINES</small></div></div>
+        <div class="con-card" id="con-files"><img class="con-logo" src="assets/logos/google-drive.svg" alt="" /><div>Project files<small>CONTEXT</small></div></div>
+        <svg id="con-lines" viewBox="0 0 200 360" fill="none">
+          <path id="con-l1" d="M0 75 C 100 75, 100 180, 200 180" stroke="#8a8f98" stroke-width="3" />
+          <path id="con-l2" d="M0 285 C 100 285, 100 180, 200 180" stroke="#8a8f98" stroke-width="3" />
+        </svg>
+        <div id="con-ring"></div>
+        <div id="con-dot"><b id="con-dot-b"></b>Your dot<img src="assets/logos/openai.svg" alt="" /></div>
+        <div class="con-pk" id="con-pk1"></div>
+        <div class="con-pk" id="con-pk2"></div>
+      </div>
+      <div class="con-sweep" data-layout-ignore></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    // local = film - 8.367: "if you have access" 0.35-1.0, "Connect" 1.16, "calendar" 1.95, "files" 2.46, "and then say" 2.73
+    tl.fromTo("#con-stage", { clipPath: "inset(0% 0% 0% 100%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.4, ease: "power3.inOut" }, 0);
+    tl.set("#con-stage", { clipPath: "none" }, 0.41);
+    tl.fromTo(".con-sweep", { x: 1100 }, { x: -300, duration: 0.5, ease: "power2.inOut" }, 0.02);
+    tl.fromTo("#con-dot", { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.3, ease: "power3.out" }, 0.15);
+    tl.fromTo("#con-access", { opacity: 0, x: -30 }, { opacity: 1, x: 0, duration: 0.25, ease: "power3.out" }, 0.35);
+    tl.to("#con-access b", { backgroundColor: "#c8f04a", duration: 0.15 }, 0.95);
+    // The access chip hands over to the title on "Connect"
+    tl.to("#con-access", { opacity: 0, y: -40, filter: "blur(6px)", duration: 0.2, ease: "power2.in" }, 1.05);
+    tl.fromTo("#con-title", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.15, ease: "power4.out" }, 1.16);
+    // Full-screen from "Connect" (film 9.53): the face slides out and the diagram grows into the frame
+    tl.fromTo("#con-wrap", { scale: 1, y: 0 }, { scale: 1.08, y: 200, duration: 0.4, ease: "power3.inOut" }, 1.163);
+    tl.fromTo("#con-cal", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.3, ease: "power3.out" }, 1.9);
+    tl.fromTo("#con-cal .con-logo", { scale: 0, rotation: -20 }, { scale: 1, rotation: 0, duration: 0.3, ease: "back.out(2)" }, 2.0);
+    tl.fromTo("#con-files .con-logo", { scale: 0, rotation: -20 }, { scale: 1, rotation: 0, duration: 0.3, ease: "back.out(2)" }, 2.5);
+    tl.fromTo("#con-files", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.3, ease: "power3.out" }, 2.4);
+    // Each source draws a line, then a packet of data runs along it into the dot.
+    const lines = [["#con-l1", "#con-pk1", 2.1, [[550, 475], [610, 482], [650, 527], [690, 573], [750, 580]]],
+                   ["#con-l2", "#con-pk2", 2.55, [[550, 685], [610, 678], [650, 633], [690, 587], [750, 580]]]];
+    lines.forEach(([line, pk, t, pts]) => {
+      tl.fromTo(line, { strokeDasharray: 260, strokeDashoffset: 260 }, { strokeDashoffset: 0, duration: 0.35, ease: "power2.inOut" }, t);
+      tl.set(line, { stroke: "#c8f04a" }, t + 0.35);
+      tl.set(pk, { x: pts[0][0], y: pts[0][1], opacity: 1 }, t + 0.35);
+      tl.to(pk, { keyframes: pts.slice(1).map(([x, y]) => ({ x, y, duration: 0.08, ease: "none" })) }, t + 0.35);
+      tl.set(pk, { opacity: 0 }, t + 0.67);
+      // arrival: the dot answers with one ring
+      tl.fromTo("#con-ring", { opacity: 0.9, scale: 1 }, { opacity: 0, scale: 1.18, duration: 0.4, ease: "power2.out" }, t + 0.67);
+      tl.fromTo("#con-dot-b", { scale: 1.5 }, { scale: 1, duration: 0.25, ease: "power2.out" }, t + 0.67);
+    });
+    // Exit (slot ends 3.4): drift back under the prompt's wipe
+    tl.to("#con-stage", { x: -70, scale: 0.96, filter: "blur(5px)", opacity: 0, duration: 0.35, ease: "power3.in" }, 3.4);
+    window.__timelines["connect"] = tl;
+  </script>
+</template>

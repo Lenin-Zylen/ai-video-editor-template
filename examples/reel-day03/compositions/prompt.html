@@ -1,0 +1,81 @@
+<template>
+  <style>
+    @font-face { font-family: "Archivo"; src: url("assets/fonts/Archivo-var.ttf") format("truetype"); font-weight: 100 900; font-stretch: 62% 125%; }
+    #root { position: absolute; inset: 0; }
+    /* Full-screen scene (face is out of frame for the whole prompt) */
+    #pr-stage { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; background: #0d1117; overflow: hidden; }
+    #pr-wrap { position: absolute; inset: 0; transform-origin: 540px 565px; }
+    .pr-sweep { position: absolute; left: 0; top: 0; width: 260px; height: 1920px; background: linear-gradient(90deg, transparent, rgba(200, 240, 74, 0.22), transparent); }
+    #pr-title { position: absolute; left: 80px; top: 250px; font-family: "Archivo", sans-serif; font-weight: 800; font-stretch: 112%; font-size: 72px; line-height: 1; color: #ffffff; }
+    #pr-card { position: absolute; left: 60px; top: 360px; width: 960px; height: 600px; background: #161b22; border: 2px solid #2a313c; border-radius: 24px; padding: 34px 40px; }
+    #pr-head { font-family: "JetBrains Mono", monospace; font-size: 28px; letter-spacing: 0.1em; color: #8a8f98; padding-bottom: 22px; border-bottom: 2px solid #2a313c; margin-bottom: 26px; }
+    #pr-head b { color: #c8f04a; font-weight: 600; }
+    #pr-head { display: flex; align-items: center; gap: 14px; }
+    #pr-head img { width: 32px; height: 32px; }
+    #pr-text { font-family: "Inter", sans-serif; font-weight: 500; font-size: 40px; line-height: 1.38; color: #eeebe3; }
+    #pr-text p { margin-bottom: 18px; }
+    #pr-text .k { color: #c8f04a; }
+    #pr-text .cr { display: inline-block; width: 4px; height: 44px; margin-left: 4px; vertical-align: -8px; background: #c8f04a; opacity: 0; }
+    #pr-chips { position: absolute; left: 40px; bottom: 32px; display: flex; gap: 10px; }
+    .pr-chip { white-space: nowrap; height: 58px; padding: 0 18px; border-radius: 29px; border: 2px solid #2a313c; background: #0d1117; display: flex; align-items: center; gap: 12px; font-family: "JetBrains Mono", monospace; font-size: 28px; letter-spacing: 0.06em; color: #eeebe3; }
+    .pr-chip i { width: 14px; height: 14px; border-radius: 50%; background: #8a8f98; }
+    #pr-chip-ask { border-color: #c8f04a; color: #c8f04a; }
+    #pr-chip-ask i { background: #c8f04a; }
+  </style>
+  <div id="root" data-composition-id="prompt" data-width="1080" data-height="1920">
+    <div id="pr-stage">
+      <div id="pr-wrap">
+        <div id="pr-title">Then say</div>
+        <div id="pr-card">
+          <div id="pr-head"><img src="assets/logos/openai.svg" alt="" /><b>&gt;_</b> NEW GOAL FOR YOUR DOT</div>
+          <div id="pr-text">
+          <p><span data-t="0.07">Track</span> <span data-t="0.34">this</span> <span data-t="0.47">project’s</span> <span data-t="0.81">deadlines.</span></p>
+          <p><span data-t="1.33">Every</span> <span data-t="1.54">morning,</span> <span data-t="1.92">tell</span> <span data-t="2.11">me</span> <span data-t="2.2">what</span> <span data-t="2.38">changed,</span> <span data-t="2.83">what’s</span> <span data-t="3.19">overdue,</span> <span data-t="3.7">and</span> <span data-t="3.83">what</span> <span data-t="4.13">needs</span> <span data-t="4.43">my</span> <span data-t="4.45">decision.</span></p>
+          <p><span data-t="4.93">Draft</span> <span data-t="5.23">follow-ups,</span> <span data-t="5.95">but</span> <span class="k" data-t="6.23">ask</span> <span class="k" data-t="6.31">before</span> <span class="k" data-t="6.69">sending.</span></p>
+          </div>
+          <div id="pr-chips">
+            <div class="pr-chip" id="pr-chip-1"><i></i>CHANGED</div>
+            <div class="pr-chip" id="pr-chip-2"><i></i>OVERDUE</div>
+            <div class="pr-chip" id="pr-chip-3"><i></i>DECISION</div>
+            <div class="pr-chip" id="pr-chip-ask"><i></i>ASK FIRST</div>
+          </div>
+        </div>
+      </div>
+      <div class="pr-sweep" data-layout-ignore></div>
+    </div>
+  </div>
+  <script>
+    // A caret after every word; it shows only while that word is the typing frontier.
+    const words = Array.from(document.querySelectorAll("#pr-text span[data-t]"));
+    const carets = words.map((w) => {
+      const c = document.createElement("i");
+      c.className = "cr";
+      w.after(c);
+      return c;
+    });
+    const tl = gsap.timeline({ paused: true });
+    // Push in over the connect scene, then hold the full-screen layout for the whole prompt.
+    tl.fromTo("#pr-stage", { clipPath: "inset(0% 0% 0% 100%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.4, ease: "power3.inOut" }, 0);
+    tl.set("#pr-stage", { clipPath: "none" }, 0.41);
+    tl.fromTo(".pr-sweep", { x: 1100 }, { x: -300, duration: 0.5, ease: "power2.inOut" }, 0.02);
+    tl.set("#pr-wrap", { scale: 1.08, y: 150 }, 0);
+    tl.fromTo("#pr-card", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 0.05);
+    tl.fromTo("#pr-title", { opacity: 0 }, { opacity: 1, duration: 0.15 }, 0);
+    // Script wording (production sheet, cut 05); each word types on as it is spoken (film - 11.767 s).
+    words.forEach((el, i) => {
+      const t = parseFloat(el.dataset.t);
+      const next = i + 1 < words.length ? parseFloat(words[i + 1].dataset.t) : 7.0;
+      tl.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 0.06, ease: "none" }, t);
+      tl.set(carets[i], { opacity: 1 }, t);
+      tl.set(carets[i], { opacity: 0 }, next);
+    });
+    // Three beats from the delivery notes (changed / overdue / decision), then the safety rule.
+    [["#pr-chip-1", 2.4], ["#pr-chip-2", 3.2], ["#pr-chip-3", 4.47], ["#pr-chip-ask", 6.25]].forEach(([id, t]) => {
+      tl.fromTo(id, { opacity: 0, scale: 0.6, y: 10 }, { opacity: 1, scale: 1, y: 0, duration: 0.3, ease: "back.out(2.2)" }, t);
+      tl.fromTo(id + " i", { backgroundColor: "#ffffff" }, { backgroundColor: id === "#pr-chip-ask" ? "#c8f04a" : "#8a8f98", duration: 0.4 }, t + 0.1);
+    });
+    // Exit (slot ends 7.133): drift back as the face returns
+    tl.to("#pr-stage", { x: -70, scale: 0.96, filter: "blur(5px)", opacity: 0, duration: 0.35, ease: "power3.in" }, 7.133);
+    window.__timelines["prompt"] = tl;
+  </script>
+</template>

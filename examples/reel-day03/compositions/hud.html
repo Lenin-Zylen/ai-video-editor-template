@@ -1,0 +1,32 @@
+<template>
+  <style>
+    #root { position: absolute; inset: 0; pointer-events: none; }
+    #hud-bar { position: absolute; left: 0; top: 0; width: 1080px; height: 8px; background: #c8f04a; transform-origin: 0 50%; }
+    #hud-step { position: absolute; left: 80px; top: 190px; font-family: "JetBrains Mono", monospace; font-size: 30px; letter-spacing: 0.12em; color: #8a8f98; opacity: 0; white-space: nowrap; }
+    #hud-nums { display: inline-block; position: relative; width: 2.4ch; height: 1.2em; vertical-align: top; }
+    #hud-mark img { width: 44px; height: 44px; border-radius: 50%; }
+    #hud-mark { display: flex; align-items: center; gap: 12px; margin-top: -8px; position: absolute; right: 80px; top: 190px; font-family: "JetBrains Mono", monospace; font-size: 28px; letter-spacing: 0.08em; color: #8a8f98; }
+    #hud-nums b { position: absolute; left: 0; top: 0; color: #c8f04a; font-weight: 600; opacity: 0; }
+  </style>
+  <div id="root" data-composition-id="hud" data-width="1080" data-height="1920">
+    <div id="hud-bar"></div>
+    <div id="hud-mark"><img src="assets/logos/channel-avatar.png" alt="" />@yourhandle</div>
+    <div id="hud-step">STEP <span id="hud-nums"><b id="hud-n1">01</b><b id="hud-n2">02</b><b id="hud-n3">03</b><b id="hud-n4">04</b></span> / 04</div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    // Progress over the whole film; this host starts at 2.0 s, so it opens at 2.0 / 27.86.
+    tl.fromTo("#hud-bar", { scaleX: 2.0 / 27.86 }, { scaleX: 1, duration: 25.86, ease: "none" }, 0);
+    tl.fromTo("#hud-mark", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 0.2);
+    // Step counter runs during the four steps (film 8.367 - 24.3)
+    const at = (film) => film - 2.0;
+    tl.fromTo("#hud-step", { opacity: 0 }, { opacity: 1, duration: 0.2 }, at(8.367));
+    const steps = [["#hud-n1", 8.367], ["#hud-n2", 11.767], ["#hud-n3", 18.9], ["#hud-n4", 20.533]];
+    steps.forEach(([id, t], i) => {
+      tl.set(id, { opacity: 1 }, at(t));
+      if (i > 0) tl.set(steps[i - 1][0], { opacity: 0 }, at(t));
+    });
+    tl.to("#hud-step", { opacity: 0, duration: 0.15 }, at(24.3) - 0.15);
+    window.__timelines["hud"] = tl;
+  </script>
+</template>

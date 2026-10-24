@@ -1,0 +1,60 @@
+<template>
+  <style>
+    @font-face { font-family: "Archivo"; src: url("assets/fonts/Archivo-var.ttf") format("truetype"); font-weight: 100 900; font-stretch: 62% 125%; }
+    #root { position: absolute; inset: 0; }
+    #dots-stage { position: absolute; left: 0; top: 0; width: 1080px; height: 960px; background: #0d1117; overflow: hidden; }
+    .dots-sweep { position: absolute; left: 0; top: 0; width: 260px; height: 960px; background: linear-gradient(90deg, transparent, rgba(200, 240, 74, 0.22), transparent); }
+    #dots-label { position: absolute; left: 80px; top: 260px; font-family: "JetBrains Mono", monospace; font-size: 30px; letter-spacing: 0.12em; color: #8a8f98; }
+    #dots-title { position: absolute; left: 72px; top: 315px; font-family: "Archivo", sans-serif; font-weight: 900; font-stretch: 125%; font-size: 150px; line-height: 1; color: #ffffff; }
+    #dots-title i { font-style: normal; color: #c8f04a; display: inline-block; }
+    #dots-label { display: flex; align-items: center; gap: 14px; }
+    .dots-oai-s { width: 34px; height: 34px; }
+    #dots-logo { position: absolute; left: 850px; top: 318px; width: 150px; height: 150px; }
+    .dots-chat { position: absolute; top: 530px; width: 280px; height: 170px; background: #161b22; border: 2px solid #2a313c; border-radius: 24px; padding: 26px 28px; }
+    .dots-chat p { font-family: "JetBrains Mono", monospace; font-size: 28px; letter-spacing: 0.08em; color: #8a8f98; }
+    .dots-chat .ln { height: 14px; border-radius: 7px; background: #2a313c; margin-top: 18px; }
+    #dots-c1 { left: 80px; } #dots-c2 { left: 400px; } #dots-c3 { left: 720px; }
+    #dots-track { position: absolute; left: 80px; top: 750px; width: 920px; height: 84px; border-radius: 42px; background: #161b22; border: 2px solid #2a313c; overflow: hidden; }
+    #dots-fill { position: absolute; left: 0; top: 0; width: 920px; height: 84px; background: #1d2a12; transform-origin: 0 50%; }
+    #dots-pill { position: absolute; left: 70px; top: 0; height: 84px; display: flex; align-items: center; font-family: "Inter", sans-serif; font-weight: 600; font-size: 32px; color: #ffffff; }
+    #dots-agent { position: absolute; left: 0; top: 0; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%; background: #c8f04a; box-shadow: 0 0 0 8px rgba(200, 240, 74, 0.18); }
+  </style>
+  <div id="root" data-composition-id="dots" data-width="1080" data-height="1920">
+    <div id="dots-stage">
+      <div id="dots-label"><img class="dots-oai-s" src="assets/logos/openai.svg" alt="" />NEW IN CHATGPT · OPENAI</div>
+      <img id="dots-logo" src="assets/logos/openai.svg" alt="" />
+      <div id="dots-title">Dots<i>.</i></div>
+      <div class="dots-chat" id="dots-c1"><p>CHAT 1</p><div class="ln" style="width: 90%"></div><div class="ln" style="width: 60%"></div></div>
+      <div class="dots-chat" id="dots-c2"><p>CHAT 2</p><div class="ln" style="width: 75%"></div><div class="ln" style="width: 85%"></div></div>
+      <div class="dots-chat" id="dots-c3"><p>CHAT 3</p><div class="ln" style="width: 80%"></div><div class="ln" style="width: 55%"></div></div>
+      <div id="dots-track"><div id="dots-fill"></div><div id="dots-pill">Your dot keeps working</div></div>
+      <div id="dots-agent"></div>
+      <div class="dots-sweep" data-layout-ignore></div>
+    </div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    // local = film - 4.767: "Dots" 0.87, "keep working" 1.23, "between the chats" 1.97-2.6
+    tl.fromTo("#dots-stage", { clipPath: "inset(0% 0% 0% 100%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.4, ease: "power3.inOut" }, 0);
+    tl.set("#dots-stage", { clipPath: "none" }, 0.41);
+    tl.fromTo(".dots-sweep", { x: 1100 }, { x: -300, duration: 0.5, ease: "power2.inOut" }, 0.02);
+    tl.fromTo("#dots-label", { opacity: 0 }, { opacity: 1, duration: 0.2 }, 0.25);
+    tl.fromTo("#dots-title", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.18, ease: "power4.out" }, 0.6);
+    tl.fromTo("#dots-title i", { scale: 0 }, { scale: 1, duration: 0.3, ease: "back.out(3)" }, 0.85);
+    tl.fromTo("#dots-logo", { opacity: 0, scale: 0.6, rotation: -30 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.4, ease: "back.out(1.8)" }, 0.45);
+    tl.fromTo("#dots-track", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.3, ease: "power3.out" }, 1.15);
+    tl.fromTo("#dots-fill", { scaleX: 0.04 }, { scaleX: 1, duration: 1.65, ease: "none" }, 1.25);
+    // The dot itself is the agent: it drops out of the title, then visits each chat as it opens.
+    tl.fromTo("#dots-agent", { x: 520, y: 430, scale: 0 }, { x: 115, y: 792, scale: 1, duration: 0.35, ease: "power3.inOut" }, 0.95);
+    const chats = [["#dots-c1", 220, 1.35], ["#dots-c2", 540, 1.75], ["#dots-c3", 860, 2.15]];
+    chats.forEach(([id, x, t]) => {
+      tl.fromTo(id, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.28, ease: "power3.out" }, t);
+      tl.to("#dots-agent", { x, y: 640, duration: 0.18, ease: "power2.out" }, t + 0.02);
+      tl.to("#dots-agent", { x: x + 60, y: 792, duration: 0.18, ease: "power2.in" }, t + 0.22);
+      // each chat closes (dims) while the dot keeps going underneath
+      tl.to(id, { opacity: 0.35, duration: 0.2, ease: "power2.in" }, t + 0.36);
+    });
+    tl.to("#dots-agent", { x: 960, duration: 0.5, ease: "power2.inOut" }, 2.45);
+    window.__timelines["dots"] = tl;
+  </script>
+</template>

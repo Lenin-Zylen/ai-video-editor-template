@@ -1,0 +1,32 @@
+# Media and generated files stay on each computer
+raw-footages/
+references/
+work/
+exports/
+renders/
+editor.config.json
+
+# Per-project heavy or generated media
+projects/*/assets/cut.mp4
+projects/*/assets/transcript.json
+projects/*/assets/music/*.mp3
+projects/*/assets/music/*.wav
+projects/*/cover/shot/
+projects/*/boards/stills/redo/
+
+# HyperFrames caches
+.media/
+.thumbnails/
+.waveform-cache/
+.hyperframes/
+node_modules/
+
+# Python and OS
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# First-time setup marker (one per computer)
+.setup-done

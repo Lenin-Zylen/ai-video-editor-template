@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en" data-resolution="portrait">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <!-- Reel cover, 1080 x 1920. Everything that must read sits inside the 3:4 profile-grid
+         crop (y 240 - 1680); the platform UI covers the top 168 px and the bottom. -->
+    <style>
+      @font-face { font-family: "Archivo"; src: url("assets/fonts/Archivo-var.ttf") format("truetype"); font-weight: 100 900; font-stretch: 62% 125%; }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #0d1117; }
+      #root { position: absolute; inset: 0; background: #0d1117; overflow: hidden; }
+      #face { position: absolute; left: 0; top: 820px; width: 1080px; height: 1100px; overflow: hidden; }
+      #face img { position: absolute; left: -60px; top: -440px; width: 1200px; height: 2133px; object-fit: cover; }
+      #face-fade { position: absolute; left: 0; top: 820px; width: 1080px; height: 260px; background: linear-gradient(#0d1117, rgba(13, 17, 23, 0)); }
+      #grid { position: absolute; left: 0; top: 0; width: 1080px; height: 900px;
+              background-image: radial-gradient(circle, rgba(138, 143, 152, 0.22) 5px, transparent 6px);
+              background-size: 104px 108px; background-position: 20px 12px; }
+      #tag { position: absolute; left: 80px; top: 300px; height: 64px; padding: 0 26px 0 18px; border-radius: 32px; background: #161b22; border: 2px solid #2a313c; display: flex; align-items: center; gap: 14px; font-family: "JetBrains Mono", monospace; font-size: 28px; letter-spacing: 0.1em; color: #eeebe3; }
+      #tag img { width: 34px; height: 34px; }
+      #tag b { color: #c8f04a; font-weight: 600; }
+      #title { position: absolute; left: 80px; top: 400px; width: 940px; font-family: "Archivo", sans-serif; font-weight: 900; font-stretch: 125%; font-size: 112px; line-height: 0.95; letter-spacing: -0.02em; text-transform: uppercase; color: #ffffff; }
+      #title i { font-style: normal; color: #c8f04a; }
+      #chip { position: absolute; left: 80px; top: 1520px; height: 84px; padding: 0 30px 0 10px; border-radius: 42px; background: #0d1117; border: 2px solid #2a313c; display: flex; align-items: center; gap: 16px; font-family: "Archivo", sans-serif; font-weight: 800; font-stretch: 112%; font-size: 38px; color: #ffffff; }
+      #chip img { width: 64px; height: 64px; border-radius: 50%; }
+      #chip span { color: #8a8f98; }
+      #bar { position: absolute; left: 0; top: 0; width: 1080px; height: 8px; background: #c8f04a; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="cover" data-start="0" data-duration="1" data-width="1080" data-height="1920" data-no-timeline>
+      <div id="grid" data-layout-ignore></div>
+      <div id="face"><img src="assets/face.jpg" alt="" /></div>
+      <div id="face-fade" data-layout-ignore></div>
+      <div id="bar"></div>
+      <div id="tag"><img src="assets/logos/openai.svg" alt="" /><b>&gt;_</b> DAY 03 · OPENAI DOTS</div>
+      <div id="title">Your AI<br />can chase<br /><i>deadlines</i><br />for you.</div>
+      <div id="chip"><img src="assets/logos/channel-avatar.png" alt="" /><div><span>@</span>yourhandle</div></div>
+    </div>
+  </body>
+</html>

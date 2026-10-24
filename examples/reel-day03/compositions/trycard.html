@@ -1,0 +1,22 @@
+<template>
+  <style>
+    @font-face { font-family: "Archivo"; src: url("assets/fonts/Archivo-var.ttf") format("truetype"); font-weight: 100 900; font-stretch: 62% 125%; }
+    #root { position: absolute; inset: 0; }
+    #try-bg { position: absolute; inset: 0; background: #0d1117; }
+    #try-title { position: absolute; left: 0; top: 700px; width: 1080px; text-align: center; white-space: nowrap; font-family: "Archivo", sans-serif; font-weight: 900; font-stretch: 125%; font-size: 122px; line-height: 1; color: #ffffff; transform-origin: 50% 50%; }
+    #try-title b { color: #c8f04a; font-family: "JetBrains Mono", monospace; font-weight: 600; font-size: 108px; }
+  </style>
+  <div id="root" data-composition-id="trycard" data-width="1080" data-height="1920">
+    <div id="try-bg"></div>
+    <div id="try-title" data-layout-allow-overflow><b>&gt;_</b> TRY THIS</div>
+  </div>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    // In: the card punches up from depth. Out (slot ends 0.6): zoom through it into step 1.
+    tl.fromTo("#try-bg", { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "power2.out" }, 0);
+    tl.fromTo("#try-title", { opacity: 0, scale: 0.6, filter: "blur(12px)" }, { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.25, ease: "expo.out" }, 0);
+    tl.to("#try-title", { scale: 3.2, filter: "blur(14px)", opacity: 0, duration: 0.3, ease: "power3.in" }, 0.6);
+    tl.to("#try-bg", { opacity: 0, duration: 0.25, ease: "power2.in" }, 0.65);
+    window.__timelines["trycard"] = tl;
+  </script>
+</template>

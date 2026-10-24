@@ -1,0 +1,6 @@
+{
+  "_comment": "Copy to editor.config.json (not committed) and set the paths for this computer. Leave a key out if the tool is on the PATH.",
+  "ffmpeg": "C:/Users/you/tools/ffmpeg/bin/ffmpeg.exe",
+  "whisper_cli": "C:/Users/you/tools/whisper/Release/whisper-cli.exe",
+  "whisper_model": "C:/Users/you/tools/whisper/models/ggml-small.en.bin"
+}

@@ -1,0 +1,99 @@
+{
+  "intake_complete": false,
+  "updated": null,
+
+  "identity": {
+    "brand_type": null,
+    "brand_name": null,
+    "on_camera": [{ "name": null, "title": null }],
+    "tagline": null,
+    "industry": null,
+    "description": null,
+    "website": null
+  },
+
+  "handles": {
+    "instagram": null,
+    "youtube": null,
+    "facebook": null,
+    "x": null,
+    "linkedin": null,
+    "tiktok": null
+  },
+
+  "audience": {
+    "who": null,
+    "level": null,
+    "regions": null
+  },
+
+  "formats": {
+    "short_form": null,
+    "long_form": null,
+    "short": { "aspect": "9:16", "size": [1080, 1920], "length_s": [30, 60], "platforms": [] },
+    "long": { "aspect": "16:9", "size": [1920, 1080], "length_min": [8, 15], "platforms": [] },
+    "series": null,
+    "cadence": null
+  },
+
+  "language": {
+    "spoken": [],
+    "captions": [],
+    "mixed_language": false,
+    "accent_notes": null,
+    "whisper_model": null
+  },
+
+  "assets": {
+    "logo": null,
+    "logo_variants": { "full": null, "mark": null, "light": null, "dark": null },
+    "avatar": null,
+    "headshot": null,
+    "colors": { "primary": null, "secondary": null, "accent": null, "background": null },
+    "fonts": [],
+    "brand_guide": null,
+    "intro_outro": null,
+    "music": { "policy": null, "tracks": [] },
+    "other": []
+  },
+
+  "style": {
+    "references": [],
+    "tone": [],
+    "motion": null,
+    "on_camera": null,
+    "captions": null,
+    "broll": null
+  },
+
+  "cta": {
+    "type": null,
+    "default_keyword": null,
+    "default_text": null
+  },
+
+  "production": {
+    "camera": null,
+    "mic": null,
+    "script_source": null,
+    "approver": null,
+    "turnaround": null,
+    "max_pause_s": 0.1
+  },
+
+  "deliverables": {
+    "cover": true,
+    "captions_srt": true,
+    "thumbnail_16x9": false,
+    "post_copy": false
+  },
+
+  "avoid": {
+    "words": [],
+    "competitors": [],
+    "colors": [],
+    "legal": null
+  },
+
+  "notes": null
+}
