@@ -48,9 +48,13 @@ Follow `docs/WORKFLOW.md` (or `/new-video <slug>`). In short:
 - Check rendered files: duration, no pauses over the limit, loudness −14 LUFS, frames inside the safe areas (`docs/PLATFORMS.md`).
 
 ## Folders
-- In git: `brand/`, `tools/`, `docs/`, `examples/`, `projects/` (code and small assets only), `.claude/commands/`.
-- Local only: `raw-footages/`, `references/`, `work/`, `exports/`, `editor.config.json`, `.setup-done`,
-  `projects/*/assets/cut.mp4`, music files.
+- Folder map: `docs/WORKFLOW.md`. Setup creates the workspace folders; `python tools/setup.py folders --slug <slug>`
+  creates the folders for one video. Run it again if a fresh clone misses a git-ignored folder.
+- Do not commit a video file or an audio file. Full rules and checks: `docs/GIT.md`.
+- In git: `brand/`, `tools/`, `docs/`, `examples/`, `projects/` (code and small assets only), `.claude/commands/`,
+  reference metadata (`references/**/*.info.json`, `references/_analysis/`).
+- Local only: `raw-footages/`, `work/`, `exports/`, `renders/`, `editor.config.json`, `.setup-done`,
+  all video and audio under `projects/` and `references/`.
 
 ## Tools
 - ffmpeg and whisper.cpp paths: `editor.config.json` (written by `python tools/setup.py write-config`) or the PATH.

@@ -7,17 +7,43 @@ Read `brand/BRAND.md` first. Every edit follows it.
 
 ## Folder map
 
-| Folder | What is in it | In git? |
-|---|---|---|
-| `brand/` | Brand rules, brand sheet, logo | yes |
-| `tools/` | The editor scripts (Python, no extra packages) | yes |
-| `docs/` | This workflow, recording checklist, platform specs | yes |
-| `template/` | Starter kit to set up a new channel | yes |
-| `projects/<slug>/` | One HyperFrames project per video: `edit.json`, scenes, cover | yes (no media) |
-| `raw-footages/<slug>/` | Camera clips for one video | no |
-| `references/` | Reference reels for the brand | no |
-| `work/<slug>/` | Scratch: WAVs, transcripts, the cut, the master | no |
-| `exports/<slug>/` | Finished files per platform | no |
+`python tools/setup.py done` creates the workspace folders at the end of setup.
+`python tools/setup.py folders --slug <slug>` creates the folders for one video.
+Most of these folders are git-ignored, so a fresh clone does not have them until you run these commands.
+What goes into git: `docs/GIT.md`.
+
+```
+<repo>/
+├── brand/                  brand rules, channel.json, logo, assets              git
+├── tools/                  editor scripts (Python, standard library only)       git
+├── docs/                   workflow, setup, recording, platforms, git rules     git
+├── examples/reel-day03/    the example reel to learn from                        git
+├── .claude/commands/       /setup, /intake, /new-video                           git
+├── references/             reference reels for the brand
+│   ├── <id>/<id>.info.json     metadata (title, channel, counts)                 git
+│   ├── <id>/*.mp4              the video                                         local
+│   └── _analysis/<id>/         cuts.txt, transcript.srt, words.srt, sheet.jpg, frames/   git
+├── raw-footages/<slug>/    camera clips and the script for one video             local
+├── projects/<slug>/        one HyperFrames project per video                     git (no media)
+│   ├── edit.json, index.html, hyperframes.json, package.json, STORYBOARD.md
+│   ├── compositions/           one HTML file per scene, captions.html
+│   ├── boards/                 storyboard.html (boards/stills/redo/ is local)
+│   ├── cover/                  index.html, cover.png, assets/logos/ (cover/shot/ is local)
+│   └── assets/
+│       ├── fonts/, logos/, screens/    small files                               git
+│       ├── sfx/, music/, meme/         audio and video clips                     local
+│       ├── cut.mp4                     written by tools/cut.py                    local
+│       └── transcript.json             generated                                  local
+├── work/<slug>/            scratch: WAVs, clips/ word times, the cut, the master local
+├── exports/<slug>/         drafts/, then instagram/, youtube/, facebook/, x/     local
+├── renders/                other renders                                          local
+├── editor.config.json      tool paths for this computer                           local
+└── .setup-done             setup marker for this computer                         local
+```
+
+Put the screenshots for a video in `assets/screens/`, sound effects in `assets/sfx/`, music in `assets/music/`
+(with a `CREDITS.md`), and meme or stock clips in `assets/meme/` (with a `CREDITS.md`).
+Keep downloads and captures in `work/<slug>/` until you pick the final file.
 
 ## The steps
 
@@ -25,6 +51,7 @@ Read `brand/BRAND.md` first. Every edit follows it.
    Put the script PDF next to it.
 2. **Create the project.** Ask Claude: "New video `<slug>` from `raw-footages/<slug>` with this script."
    Claude runs `npx hyperframes init projects/<slug> --example blank --resolution portrait`,
+   runs `python tools/setup.py folders --slug <slug>` to add the video folders (see the folder map),
    copies the fonts, logos and sound effects from `examples/reel-day03/assets/` and `brand/logo/`, and writes `projects/<slug>/edit.json`.
 3. **Transcribe and pick takes.**
    ```

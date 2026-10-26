@@ -8,7 +8,8 @@ Start a new video: `$ARGUMENTS` (the slug, e.g. `day04-sonnet`; ask for it if mi
    Check that `brand/BRAND.md` is approved (not DRAFT).
 2. Read `brand/BRAND.md`, `brand/channel.json`, `docs/WORKFLOW.md`, and the script in `raw-footages/<slug>/`.
    If the folder mixes clips from different videos, ask which ones belong to this video.
-3. Create `projects/<slug>` with HyperFrames (portrait for short form, landscape for long form), copy fonts,
+3. Create `projects/<slug>` with HyperFrames (portrait for short form, landscape for long form), then run
+   `python tools/setup.py folders --slug <slug>` to add the video folders (`docs/WORKFLOW.md` folder map), copy fonts,
    logos and sound effects from `examples/reel-day03/assets/` and `brand/logo/`, and write `projects/<slug>/edit.json`.
 4. `python tools/transcribe_clips.py projects/<slug>/edit.json`, pick the best take for every script line,
    show the take list, then `python tools/cut.py projects/<slug>/edit.json`.

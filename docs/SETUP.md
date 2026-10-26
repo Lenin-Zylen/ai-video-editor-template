@@ -84,8 +84,10 @@ Optional extras, only if chosen:
 
 ```
 python tools/setup.py write-config     # writes editor.config.json with the found paths
-python tools/setup.py done             # runs tools/check_setup.py, then writes .setup-done
+python tools/setup.py done             # runs tools/check_setup.py, creates the folders, then writes .setup-done
 ```
+`done` also creates the workspace folders that git does not carry: `raw-footages/`, `references/_analysis/`,
+`work/`, `exports/`, `renders/` (folder map: `docs/WORKFLOW.md`). To create them again, run `python tools/setup.py folders`.
 `done` refuses to write the marker while something required is missing. Fix it and run it again.
 
 Then add a line to the memory (if memory is available): the OS, where the tools live, the whisper model.

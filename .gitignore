@@ -1,32 +1,39 @@
-# Media and generated files stay on each computer
+# Rule: do not commit a video file or an audio file.
+# Commit instructions, code, analysis and small assets only. See docs/GIT.md.
+
+# Local folders (keep on each computer only)
 raw-footages/
-references/
 work/
 exports/
 renders/
-editor.config.json
 
-# Per-project heavy or generated media
-projects/*/assets/cut.mp4
+# Video and audio (examples/ ships its licensed sound effects on purpose)
+projects/*/assets/**/*.mp4
+projects/*/assets/**/*.mp3
+projects/*/assets/**/*.wav
+references/**/*.mp4
+references/**/*.wav
+
+# Generated files
 projects/*/assets/transcript.json
-projects/*/assets/music/*.mp3
-projects/*/assets/music/*.wav
 projects/*/cover/shot/
 projects/*/boards/stills/redo/
+*.log
 
-# HyperFrames caches
+# Caches
+.hyperframes/
 .media/
 .thumbnails/
 .waveform-cache/
-.hyperframes/
 node_modules/
-
-# Python and OS
 __pycache__/
 *.pyc
+
+# Per computer
+editor.config.json
+.setup-done
+
+# OS files
 .DS_Store
 Thumbs.db
 desktop.ini
-
-# First-time setup marker (one per computer)
-.setup-done

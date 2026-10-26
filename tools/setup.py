@@ -7,7 +7,8 @@
     python tools/setup.py whisper-windows [--dir PATH]          # Windows: download + unzip whisper.cpp
     python tools/setup.py ffmpeg-windows [--dir PATH]           # Windows without winget: download FFmpeg
     python tools/setup.py write-config      # write editor.config.json from what is found
-    python tools/setup.py done              # verify everything, then write the .setup-done marker
+    python tools/setup.py done              # verify everything, create the folders, write the .setup-done marker
+    python tools/setup.py folders [--slug SLUG]   # create the workspace folders (and one video's folders)
 
 Standard library only, so it runs before anything else is installed (Python 3.10+).
 """
@@ -32,6 +33,11 @@ MODEL_URL = "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-{siz
 MODEL_MB = {"base.en": 142, "small.en": 466, "medium.en": 1500, "small": 466, "medium": 1500}
 FFMPEG_WIN_URL = "https://www.gyan.dev/ffmpeg/builds/ffmpeg-release-essentials.zip"
 WHISPER_RELEASES = "https://api.github.com/repos/ggml-org/whisper.cpp/releases?per_page=20"
+# Folder layout (docs/WORKFLOW.md). Most of these are git-ignored, so a fresh clone does not have them.
+WORKSPACE_DIRS = ["raw-footages", "references/_analysis", "work", "exports", "renders", "projects"]
+VIDEO_DIRS = ["raw-footages/{s}", "work/{s}/clips", "exports/{s}/drafts",
+              "projects/{s}/compositions", "projects/{s}/cover/assets/logos", "projects/{s}/boards",
+              *(f"projects/{{s}}/assets/{d}" for d in ("fonts", "logos", "sfx", "music", "meme", "screens"))]
 
 
 # ---------- detection ----------
@@ -291,7 +297,16 @@ def cmd_ffmpeg_windows(a):
     print(next(base.rglob("ffmpeg.exe")))
 
 
-# ---------- config and marker ----------
+# ---------- folders, config and marker ----------
+
+def cmd_folders(a):
+    if a.slug and not re.fullmatch(r"[a-z0-9][a-z0-9-]*", a.slug):
+        sys.exit("slug: lowercase letters, digits and dashes only")
+    dirs = WORKSPACE_DIRS + ([d.format(s=a.slug) for d in VIDEO_DIRS] if a.slug else [])
+    for d in dirs:
+        (ROOT / d).mkdir(parents=True, exist_ok=True)
+    print("folders ready: " + ", ".join(dirs))
+
 
 def cmd_write_config(a):
     d = detect()
@@ -313,6 +328,7 @@ def cmd_done(a):
     r = subprocess.run([sys.executable, str(ROOT / "tools" / "check_setup.py")])
     if r.returncode != 0:
         sys.exit("setup is not complete; fix the MISSING lines above, then run this again")
+    cmd_folders(argparse.Namespace(slug=None))
     d = detect()
     MARKER.write_text(json.dumps({"os": d["os"], "os_version": d["os_version"], "tools": d["tools"]}, indent=2),
                       encoding="utf-8")
@@ -332,6 +348,7 @@ def main():
         sub.add_parser(name).add_argument("--dir")
     sub.add_parser("write-config")
     sub.add_parser("done")
+    sub.add_parser("folders").add_argument("--slug")
     a = p.parse_args()
     if a.cmd == "status":
         print("SETUP DONE" if MARKER.exists() else "SETUP NEEDED: run the first-time setup (docs/SETUP.md, or /setup)")
@@ -342,7 +359,8 @@ def main():
         print(json.dumps(plan(detect()), indent=2))
     else:
         {"model": cmd_model, "whisper-windows": cmd_whisper_windows, "ffmpeg-windows": cmd_ffmpeg_windows,
-         "write-config": cmd_write_config, "done": cmd_done}[a.cmd](a)
+         "write-config": cmd_write_config, "done": cmd_done,
+         "folders": cmd_folders}[a.cmd](a)
 
 
 if __name__ == "__main__":

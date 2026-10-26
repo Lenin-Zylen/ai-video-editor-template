@@ -41,7 +41,7 @@ You direct it in plain English with **Claude Code**; it edits with **HyperFrames
 |---|---|
 | `CLAUDE.md` | How Claude works here: setup → intake → brand → edit |
 | `tools/` | `setup.py`, `intake.py`, `init_channel.py`, `transcribe_clips.py`, `cut.py`, `captions.py`, `publish.py`, `check_setup.py` (Python, standard library only) |
-| `docs/` | `SETUP.md`, `CHANNEL_INTAKE.md`, `WORKFLOW.md`, `RECORDING.md`, `PLATFORMS.md`, `INSTALL.md` (manual install for macOS, Linux, Windows) |
+| `docs/` | `SETUP.md`, `CHANNEL_INTAKE.md`, `WORKFLOW.md`, `RECORDING.md`, `PLATFORMS.md`, `INSTALL.md` (manual install for macOS, Linux, Windows), `GIT.md` (what to commit, what to keep local) |
 | `brand/` | `channel.json` (your channel profile, filled by the intake), `BRAND.md` (starter rules until your brand is approved), `logo/`, `assets/` |
 | `examples/reel-day03/` | A complete 28 s reel (HyperFrames scenes, captions, transitions, sound effects, cover, `edit.json`) to learn from |
 | `.claude/commands/` | `/setup`, `/intake`, `/new-video` |
